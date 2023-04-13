@@ -40,7 +40,22 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    news_soup = BeautifulSoup(html_content, "html.parser")
+    return {
+        "url": news_soup.find("link", {"rel": "canonical"})["href"],
+        "title": news_soup.find("h1", {"class": "entry-title"}).string.strip(),
+        "timestamp": news_soup.find("li", {"class": "meta-date"}).string,
+        "writer": news_soup.find("a", {"class": "url fn n"}).string,
+        "reading_time": int(
+            news_soup.find("li", {"class": "meta-reading-time"})
+            .text[:2]
+            .strip()
+        ),
+        "summary": news_soup.find(
+            "div", {"class": "entry-content"}
+        ).p.getText().strip(),
+        "category": news_soup.find("span", {"class": "label"}).string,
+    }
 
 
 # Requisito 5
