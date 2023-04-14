@@ -24,4 +24,6 @@ def search_by_date(date):
 
 # Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    compiled_regex = re.compile(rf'{category}', re.I)
+    found_results = search_news({"category": {"$regex": compiled_regex}})
+    return [(result["title"], result["url"]) for result in found_results]
