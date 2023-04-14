@@ -14,7 +14,7 @@ def search_by_date(date):
         converted_date = datetime.strptime(date, "%Y-%m-%d").strftime(
             "%d/%m/%Y"
         )
-        found_results = search_news({"timestamp": {"$regex": converted_date}})
+        found_results = search_news({"timestamp": converted_date})
         return [(result["title"], result["url"]) for result in found_results]
     except ValueError:
         raise ValueError("Data inválida")
